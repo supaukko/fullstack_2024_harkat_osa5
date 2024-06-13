@@ -7,7 +7,7 @@ function Login({
 
     return (
         <div>
-            <h2>Login</h2>
+            <h2>log in to application</h2>
             <form onSubmit={handleLogin}>
                 <div>
                     <label htmlFor="username">Username</label>

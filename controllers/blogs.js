@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const Blog = require('../models/blog')
-const User = require('../models/user')
+const logger = require('../utils/logger')
 const { tokenExtractor, userExtractor } = require('../utils/middleware')
 
 /*
@@ -25,7 +25,7 @@ router.get('/', async (request, response) => {
  * tämän kirjaton avulla
  */
 router.get('/:id', async (request, response /*,next*/) => {
-  //§try {
+  //try {
   const blog =  await Blog.findById(request.params.id)
   if (blog) {
     response.json(blog)
@@ -89,6 +89,8 @@ router.delete('/:id',
     }
 
     if (blog.user.toString() !== userId.toString()) {
+      logger.error('No authorization (403) to delete the blog',
+        blog.user.toString(), userId.toString())
       return response.status(403).json(
         { message: 'No authorization to delete the blog' })
     }

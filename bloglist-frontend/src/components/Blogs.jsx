@@ -5,10 +5,10 @@ const Blogs = ({blogs, handleDelete, blogData, handleRowSelect}) => {
     <table>
       <thead>
         <tr>
-          <th>Kirjoittaja</th>
-          <th>Aihe</th>
-          <th>URL</th>
-          <th>Äänimäärä</th>
+          <th>Author</th>
+          <th>Title</th>
+          <th>Url</th>
+          <th>Likes</th>
           <th></th>
         </tr>
       </thead>

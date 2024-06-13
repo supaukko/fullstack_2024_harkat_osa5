@@ -11,7 +11,7 @@ const BlogForm = ({
       <h3>{header}</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="author">Kirjoittaja:</label>
+          <label htmlFor="author">author:</label>
           <input
             type="text"
             id="author"
@@ -21,7 +21,7 @@ const BlogForm = ({
           />
         </div>
         <div>
-          <label htmlFor="title">Otsikko:</label>
+          <label htmlFor="title">title:</label>
           <input
             type="text"
             id="title"
@@ -31,7 +31,7 @@ const BlogForm = ({
           />
         </div>
         <div>
-          <label htmlFor="url">URL:</label>
+          <label htmlFor="url">url:</label>
           <input
             type="text"
             id="url"
@@ -41,7 +41,7 @@ const BlogForm = ({
           />
         </div>
         <div>
-          <label htmlFor="votes">Äänimäärä:</label>
+          <label htmlFor="votes">likes:</label>
           <input
             type="text"
             id="votes"
@@ -50,8 +50,8 @@ const BlogForm = ({
             onChange={handleChange}
           />
         </div>
-        <button onClick={(event) => handleClear(event)}>Clear</button>
-        <button type="submit">Submit</button>
+        <button onClick={(event) => handleClear(event)}>clear form</button>
+        <button type="submit">create</button>
       </form>
     </div>
   )

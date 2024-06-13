@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import blogService from './services/blog'
+import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
@@ -59,6 +59,15 @@ const App = () => {
   const filteredBlogs = blogs?.filter(blog =>
     blog.author?.toLocaleLowerCase().includes(filter?.toLocaleLowerCase()));
 
+  const handleLogout = () => {
+    setUser(null)
+    loginService.logout()
+  }
+
+  /**
+   * Handle login
+   * @param {*} event 
+   */
   const handleLogin = async (event) => {
     event.preventDefault()
     console.log('logging in with', username, password)
@@ -72,7 +81,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      showNotification('Wrong credentials', style.error)
+      showNotification('wrong username or password', style.error)
     }
   }
 
@@ -125,19 +134,28 @@ const App = () => {
   }
 
   /**
+   * Parse error msg
+   * @param {*} error 
+   * @returns 
+   */
+  const parseErrorMsg = (error) => {
+    const msg = error.response.data.error;
+    return msg != null && msg.length > 0 ? msg : error.message
+  }
+
+  /**
    * Add a new blog
    */
   const doAdd = async () => {
     try {
       const returnedBlog = await blogService.create(blogData)
       setBlogs(blogs.concat(returnedBlog))
-      showNotification(`Added ${returnedBlog.author}`, style.notification)
+      showNotification(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+        style.notification)
       setBlogData({...defaultBlogData});
     }
     catch(error) {
-      const msg = error.response.data.error;
-      showNotification(msg !== null && msg.length > 0 ?
-        msg : error.message, style.error)
+      showNotification(parseErrorMsg(error), style.error)
     }
   }
 
@@ -153,9 +171,7 @@ const App = () => {
       setBlogData({...defaultBlogData});
     }
     catch(error) {
-      const msg = error.response.data.error;
-      showNotification(msg !== null && msg.length > 0 ?
-        msg : error.message, style.error)
+      showNotification(parseErrorMsg(error), style.error)
     }
   }
 
@@ -176,9 +192,14 @@ const App = () => {
   const handleDelete = async (id) => {
     const blog = blogs.find(b => b.id === id)
     if (window.confirm(`Delete ${blog.title} ?`)) {
-      await blogService.remove(id)
-      setBlogs(blogs.filter(b => b.id !== id))
-      showNotification(`Deleted ${blog.title}`, style.notification)
+      try {
+        await blogService.remove(id)
+        setBlogs(blogs.filter(b => b.id !== id))
+        showNotification(`Deleted ${blog.title}`, style.notification)
+      }
+      catch(error) {
+        showNotification(parseErrorMsg(error), style.error)
+      }
     }
   }
 
@@ -189,8 +210,8 @@ const App = () => {
   return (
     <div>
       <Notification message={notificationMessage} style={notificationStyle} />
-      <User user={user} />
-      <h2>Blogilista</h2>
+      <h2>blogs</h2>
+      <User user={user} handleLogout={handleLogout} />
         { !user &&
           <Login
             username={username}

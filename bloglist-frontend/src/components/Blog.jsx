@@ -4,8 +4,8 @@ const Blog = ({blog, handleDelete, blogData, handleRowSelect}) => {
       onClick={() => handleRowSelect(blog)}
       className={blogData && blogData.id === blog.id ? 'selected' : ''}
     >
-      <td>{blog.author}</td>
       <td>{blog.title}</td>
+      <td>{blog.author}</td>
       <td>{blog.url}</td>
       <td>{blog.votes}</td>
       <td>
