@@ -1,13 +1,14 @@
 import Blog from './Blog'
 
+import { useState } from 'react'
+
 const Blogs = ({
   blogs,
-  handleDelete,
-  blogData,
-  handleRowSelect,
-  user }) => {
+  selectedBlog,
+  isDeleteDisabled,
+  handleBlogDelete,
+  handleBlogSelect }) => {
 
-  console.log('Blogs', user)
   return (
     <table>
       <thead>
@@ -24,10 +25,10 @@ const Blogs = ({
         blogs.map(blog => <Blog
             key={blog.id}
             blog={blog}
-            handleDelete={handleDelete}
-            isDeleteDisabled={user == null}
-            blogData={blogData}
-            handleRowSelect={handleRowSelect} />)
+            selectedBlog={selectedBlog}
+            isDeleteDisabled={isDeleteDisabled}
+            handleBlogDelete={handleBlogDelete}
+            handleBlogSelect={handleBlogSelect} />)
       }
       </tbody>
     </table>

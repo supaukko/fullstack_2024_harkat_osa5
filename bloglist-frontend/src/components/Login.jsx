@@ -1,14 +1,25 @@
-function Login({
-    username,
-    setUsername,
-    password,
-    setPassword,
-    handleLogin}) {
+import { useState } from 'react'
+
+function Login({handleLogin}) {
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  /**
+   * Login
+   * @param {*} event 
+   */
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    await handleLogin(username, password)
+    setUsername('')
+    setPassword('')
+  }
 
     return (
         <div className='border'>
             <h2>log in to application</h2>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">Username</label>
                     <input

@@ -52,3 +52,12 @@ tr:hover {
 .border {
   border: 1px solid black;
 }
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.paragraph {
+  margin-right: 10px;
+}

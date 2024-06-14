@@ -4,8 +4,8 @@ return (
     <div>
       { user ?
           (
-            <div>
-              <p>{user?.name} logged in</p>
+            <div className='row'>
+              <p className='paragraph'>{user?.name} logged in</p>
               <div>
                 <button onClick={() => handleLogout()}>Logout</button>
               </div>

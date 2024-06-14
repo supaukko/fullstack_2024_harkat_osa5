@@ -1,21 +1,20 @@
 const Blog = ({
   blog,
-  handleDelete,
+  selectedBlog,
   isDeleteDisabled,
-  blogData,
-  handleRowSelect}) => {
+  handleBlogDelete,
+  handleBlogSelect}) => {
   return (
     <tr
-      onClick={() => handleRowSelect(blog)}
-      className={blogData && blogData.id === blog.id ? 'selected' : ''}
-    >
+      onClick={() => handleBlogSelect(blog)}
+      className={selectedBlog?.id === blog.id ? 'selected' : ''}>
       <td>{blog.title}</td>
       <td>{blog.author}</td>
       <td>{blog.url}</td>
       <td>{blog.votes}</td>
       <td>
         <button
-          onClick={() => handleDelete(blog.id)}
+          onClick={() => handleBlogDelete(blog.id)}
           disabled={isDeleteDisabled}>Delete</button>
       </td>
     </tr>

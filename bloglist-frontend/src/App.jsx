@@ -10,22 +10,14 @@ import User from './components/User'
 import Togglable from './components/Togglable'
 import {USER_STORAGE_KEY} from './config/constants'
 
-const defaultBlogData = {
-  author: '',
-  title: '',
-  url: '',
-  votes: 0,
-  id: null
-}
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [blogData, setBlogData] = useState({...defaultBlogData});
+  const [selectedBlog, setSelectedBlog] = useState(null)
   const [filter, setFilter] = useState('')
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationStyle, setNotificationStyle] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   /**
@@ -65,21 +57,21 @@ const App = () => {
     }
   }, [])
 
-  const filteredBlogs = blogs?.filter(blog =>
-    blog.author?.toLocaleLowerCase().includes(filter?.toLocaleLowerCase()));
-
-  const handleLogout = () => {
-    setUser(null)
-    loginService.logout()
+    /**
+   * Filter
+   * @param {*} event 
+   */
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value)
   }
 
   /**
-   * Handle login
-   * @param {*} event 
+   * Filter based on authors
    */
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
+  const filteredBlogs = blogs?.filter(blog =>
+    blog.author?.toLocaleLowerCase().includes(filter?.toLocaleLowerCase()));
+
+  const handleLogin = async (username, password) => {
     try {
       const usr = await loginService.login({username, password})
       window.localStorage.setItem(
@@ -87,45 +79,17 @@ const App = () => {
       ) 
       blogService.setToken(usr.token)
       setUser(usr)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
       showNotification('wrong username or password', style.error)
     }
   }
 
   /**
-   * Handle change 
-   * @param {*} event 
+   * Logout
    */
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setBlogData({
-      ...blogData,
-      [name]: value
-    });
-  }
-
-  /**
-   * Clear blog data 
-   */
-  const handleClear = (event) => {
-    console.log('handleClear..')
-    event.preventDefault()
-    setBlogData({...defaultBlogData});
-  }
-
-    /**
-   * handleRowSelect
-   * @param {*} blog
-   */
-  const handleRowSelect = (blog) => {
-    console.log('handleRowSelect', blog)
-    setBlogData({...blog});
-  }
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value)
+  const handleLogout = () => {
+    setUser(null)
+    loginService.logout()
   }
 
   /**
@@ -136,52 +100,6 @@ const App = () => {
   const parseErrorMsg = (error) => {
     const msg = error.response.data.error;
     return msg != null && msg.length > 0 ? msg : error.message
-  }
-
-  /**
-   * Handle the addition of a new blog or the update of an old blog
-   * @param {*} event 
-   */
-  const handleSubmitBlog = async (event) => {
-    event.preventDefault()
-    if (blogData.id !== null || blogData.id?.trim() === '') {
-      await doUpdate()
-    }
-    else {
-      await doAdd()
-    }
-  }
-
-  /**
-   * Add a new blog
-   */
-  const doAdd = async () => {
-    try {
-      const returnedBlog = await blogService.create(blogData)
-      setBlogs(blogs.concat(returnedBlog))
-      showNotification(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
-        style.notification)
-      setBlogData({...defaultBlogData});
-    }
-    catch(error) {
-      showNotification(parseErrorMsg(error), style.error)
-    }
-  }
-
-  /**
-   * Update a blog
-   */
-  const doUpdate = async () => {
-    console.log('doUpdate', blogData)
-    try {
-      const returnedBlog = await blogService.update(blogData.id, blogData)
-      setBlogs(blogs.map(blog => (blog.id === blogData.id ? {...blogData} : blog)))
-      showNotification(`Updated ${returnedBlog.author}`, style.notification)
-      setBlogData({...defaultBlogData});
-    }
-    catch(error) {
-      showNotification(parseErrorMsg(error), style.error)
-    }
   }
 
   const showNotification = (msg, style) => {
@@ -195,10 +113,41 @@ const App = () => {
   }
 
   /**
+   * Add a new blog
+   */
+  const handleAddBlog = async (data) => {
+    try {
+      console.log('handleAddBlog', data)
+      const returnedBlog = await blogService.create(data)
+      setBlogs(blogs.concat(returnedBlog))
+      showNotification(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+        style.notification)
+    }
+    catch(error) {
+      showNotification(parseErrorMsg(error), style.error)
+    }
+  }
+
+  /**
+   * Update a blog
+   */
+  const handleUpdateBlog = async (data) => {
+    console.log('handleUpdateBlog', data)
+    try {
+      const returnedBlog = await blogService.update(data.id, data)
+      setBlogs(blogs.map(b => (blog.id === returnedBlog.id ? {...returnedBlog} : blog)))
+      showNotification(`Updated ${returnedBlog.author}`, style.notification)
+    }
+    catch(error) {
+      showNotification(parseErrorMsg(error), style.error)
+    }
+  }
+
+  /**
    * Handle delete
    * @param {*} id 
    */
-  const handleDelete = async (id) => {
+  const handleBlogDelete = async (id) => {
     const blog = blogs.find(b => b.id === id)
     if (window.confirm(`Delete ${blog.title} ?`)) {
       try {
@@ -212,6 +161,20 @@ const App = () => {
     }
   }
 
+  /**
+   * Select blog
+   * @param {*} blog 
+   */
+  const handleBlogSelect = (blog) => {
+    console.log('handleBlogSelect', blog)
+    if (selectedBlog?.id === blog.id) {
+      setSelectedBlog(null)
+    }
+    else {
+      setSelectedBlog({...blog})
+    }
+  }
+
   if (filteredBlogs === null) {
     return null
   }
@@ -222,31 +185,22 @@ const App = () => {
       <h2>blogs</h2>
       <User user={user} handleLogout={handleLogout} />
         { !user &&
-          <Login
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            handleLogin={handleLogin} />
+          <Login handleLogin={handleLogin} />
         }
         <div>
           { user && 
             <Togglable buttonLabel='new blog' ref={blogFormRef}>
-              <BlogForm
-                blogData={blogData}
-                handleSubmit={handleSubmitBlog}
-                handleChange={handleChange} 
-                handleClear={handleClear} />
+              <BlogForm handleAddBlog={handleAddBlog} />
             </Togglable>
           }
           <h2>Blogit</h2>
           <Filter filter={filter} handleChange={handleFilterChange} />
           <Blogs
-            user={user}
             blogs={filteredBlogs}
-            handleDelete={handleDelete}
-            blogData={blogData}
-            handleRowSelect={handleRowSelect} />
+            selectedBlog={selectedBlog}
+            isDeleteDisabled={user == null}
+            handleBlogDelete={handleBlogDelete}
+            handleBlogSelect={handleBlogSelect} />
         </div>
     </div>
   )
