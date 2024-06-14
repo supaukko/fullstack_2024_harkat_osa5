@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/BlogForm'
@@ -7,6 +7,7 @@ import Filter from './components/Filter'
 import Notification from './components/Notification'
 import Login from './components/Login'
 import User from './components/User'
+import Togglable from './components/Togglable'
 import {USER_STORAGE_KEY} from './config/constants'
 
 const defaultBlogData = {
@@ -26,6 +27,13 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  /**
+   * useRef hookilla luodaan ref blogFormRef, joka kiinnitetään muistiinpanojen
+   * luomislomakkeen sisältävälle Togglable-komponentille.
+   * Nyt siis muuttuja blogFormRef toimii viitteenä komponenttiin
+   */
+  const blogFormRef = useRef()
 
   const style = {
     notification: 'notification',
@@ -50,9 +58,10 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem(USER_STORAGE_KEY)
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+      const usr = JSON.parse(loggedUserJSON)
+      setUser(usr)
+      console.log('useEffect', usr)
+      blogService.setToken(usr.token)
     }
   }, [])
 
@@ -120,6 +129,16 @@ const App = () => {
   }
 
   /**
+   * Parse error msg
+   * @param {*} error 
+   * @returns 
+   */
+  const parseErrorMsg = (error) => {
+    const msg = error.response.data.error;
+    return msg != null && msg.length > 0 ? msg : error.message
+  }
+
+  /**
    * Handle the addition of a new blog or the update of an old blog
    * @param {*} event 
    */
@@ -131,16 +150,6 @@ const App = () => {
     else {
       await doAdd()
     }
-  }
-
-  /**
-   * Parse error msg
-   * @param {*} error 
-   * @returns 
-   */
-  const parseErrorMsg = (error) => {
-    const msg = error.response.data.error;
-    return msg != null && msg.length > 0 ? msg : error.message
   }
 
   /**
@@ -222,15 +231,18 @@ const App = () => {
         }
         <div>
           { user && 
-            <BlogForm
-              blogData={blogData}
-              handleSubmit={handleSubmitBlog}
-              handleChange={handleChange} 
-              handleClear={handleClear} />
+            <Togglable buttonLabel='new blog' ref={blogFormRef}>
+              <BlogForm
+                blogData={blogData}
+                handleSubmit={handleSubmitBlog}
+                handleChange={handleChange} 
+                handleClear={handleClear} />
+            </Togglable>
           }
           <h2>Blogit</h2>
           <Filter filter={filter} handleChange={handleFilterChange} />
           <Blogs
+            user={user}
             blogs={filteredBlogs}
             handleDelete={handleDelete}
             blogData={blogData}

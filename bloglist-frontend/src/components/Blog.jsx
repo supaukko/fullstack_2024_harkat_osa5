@@ -1,4 +1,9 @@
-const Blog = ({blog, handleDelete, blogData, handleRowSelect}) => {
+const Blog = ({
+  blog,
+  handleDelete,
+  isDeleteDisabled,
+  blogData,
+  handleRowSelect}) => {
   return (
     <tr
       onClick={() => handleRowSelect(blog)}
@@ -9,7 +14,9 @@ const Blog = ({blog, handleDelete, blogData, handleRowSelect}) => {
       <td>{blog.url}</td>
       <td>{blog.votes}</td>
       <td>
-        <button onClick={() => handleDelete(blog.id)}>Delete</button>
+        <button
+          onClick={() => handleDelete(blog.id)}
+          disabled={isDeleteDisabled}>Delete</button>
       </td>
     </tr>
   )

@@ -6,7 +6,7 @@ function Login({
     handleLogin}) {
 
     return (
-        <div>
+        <div className='border'>
             <h2>log in to application</h2>
             <form onSubmit={handleLogin}>
                 <div>

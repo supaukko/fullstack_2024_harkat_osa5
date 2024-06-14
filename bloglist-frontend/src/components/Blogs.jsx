@@ -1,6 +1,13 @@
 import Blog from './Blog'
 
-const Blogs = ({blogs, handleDelete, blogData, handleRowSelect}) => {
+const Blogs = ({
+  blogs,
+  handleDelete,
+  blogData,
+  handleRowSelect,
+  user }) => {
+
+  console.log('Blogs', user)
   return (
     <table>
       <thead>
@@ -18,6 +25,7 @@ const Blogs = ({blogs, handleDelete, blogData, handleRowSelect}) => {
             key={blog.id}
             blog={blog}
             handleDelete={handleDelete}
+            isDeleteDisabled={user == null}
             blogData={blogData}
             handleRowSelect={handleRowSelect} />)
       }
