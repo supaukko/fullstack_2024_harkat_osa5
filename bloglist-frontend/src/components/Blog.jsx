@@ -8,7 +8,8 @@ const Blog = ({
 
   const [isVisible, setIsVisible] = useState(false);
 
-  console.log(`Blog user=${user?.username}`, blog)
+  //console.log(`Blog user=${user?.username}`, blog)
+
   const handleIncreaseLikes = () => {
     const updatedBlog = {...blog, ['votes']: blog.votes + 1}
     console.log('handleIncreaseLikes', updatedBlog)
@@ -25,7 +26,7 @@ const Blog = ({
   return (
     <div className={'border'}>
       <div className={'row'}>
-        <p className='paragraph'>{blog.title}</p>
+        <p className='paragraph'>{blog.title} -- {blog.author}</p>
         <div>
           <button onClick={toggleVisible}>{isVisible ? 'hide' : 'view'}</button>
         </div>
@@ -33,16 +34,16 @@ const Blog = ({
       {isVisible && (
         <>
           <div className={'row'}>
-            <p>{blog.url}</p>
+            <p className='paragraph'>url: {blog.url}</p>
           </div>
           <div className={'row'}>
-            <p className='paragraph'>likes {blog.votes}</p>
+            <p className='paragraph'>likes: {blog.votes}</p>
             <div>
               <button onClick={handleIncreaseLikes}>like</button>
             </div>
           </div>
           <div className={'row'}>
-            <p>{blog.author}</p>
+            <p className='paragraph'>user: {blog.user?.name}</p>
           </div>
           { !isRemoveEnabled && (
             <button className={'blue-button'}

@@ -14,6 +14,18 @@ const getTokenFrom = request => {
 }
 */
 
+/**
+ * Get a blog
+ * @param {*} id
+ * @returns
+ */
+const doGet = async (id) => {
+  const blog =  await Blog.findById(id)
+    .populate('user', { username: 1, name: 1 })
+  return blog
+}
+
+
 router.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs)
@@ -26,7 +38,7 @@ router.get('/', async (request, response) => {
  */
 router.get('/:id', async (request, response /*,next*/) => {
   //try {
-  const blog =  await Blog.findById(request.params.id)
+  const blog =  await doGet(request.params.id)
   if (blog) {
     response.json(blog)
   } else {
@@ -109,10 +121,10 @@ router.put('/:id', async (request, response /*,next*/) => {
   if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
     return response.status(400).send({ error: 'Invalid ObjectId' })
   }
-  // findByIdAndUpdate -metodiT heittää MongooseError virheen: Cast to ObjectId failed for value
-  // §(type Object) at path User because of "BSONError"
-  //const blog = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true })
 
+  // findByIdAndUpdate -metodiT heittää MongooseError virheen:
+  // Cast to ObjectId failed for value (type Object) at path User because of "BSONError"
+  //const blog = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true })
   const blog = await Blog.findById(request.params.id)
   if (!blog) {
     return response.status(404).json({ message: 'Blog not found' })
@@ -122,7 +134,7 @@ router.put('/:id', async (request, response /*,next*/) => {
   blog.url = request.body.url
   blog.votes = request.body.votes
   await blog.save()
-  const updatedBlog = await Blog.findById(request.params.id)
+  const updatedBlog = await doGet(request.params.id)
   response.status(200).json(updatedBlog)
   //} catch(error) { next(error) }
 })

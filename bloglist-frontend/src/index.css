@@ -50,6 +50,10 @@ tr:hover, .border.row:hover {
 
 .border {
   border: 1px solid black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  margin-bottom: 1px;
 }
 
 .row {
@@ -59,6 +63,8 @@ tr:hover, .border.row:hover {
 
 .paragraph {
   margin-right: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .blue-button {
