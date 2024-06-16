@@ -4,34 +4,21 @@ import { useState } from 'react'
 
 const Blogs = ({
   blogs,
-  selectedBlog,
-  isDeleteDisabled,
-  handleBlogDelete,
-  handleBlogSelect }) => {
+  user,
+  handleUpdateBlog,
+  handleDeleteBlog }) => {
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Author</th>
-          <th>Title</th>
-          <th>Url</th>
-          <th>Likes</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      {
-        blogs.map(blog => <Blog
-            key={blog.id}
-            blog={blog}
-            selectedBlog={selectedBlog}
-            isDeleteDisabled={isDeleteDisabled}
-            handleBlogDelete={handleBlogDelete}
-            handleBlogSelect={handleBlogSelect} />)
-      }
-      </tbody>
-    </table>
+    <div>
+    {
+      blogs.map(blog => <Blog
+          key={blog.id}
+          blog={blog}
+          handleUpdateBlog={handleUpdateBlog}
+          user={user}
+          handleDeleteBlog={handleDeleteBlog} />)
+    }
+    </div>
   )
 }
 

@@ -100,6 +100,9 @@ router.delete('/:id',
   //} catch(error) { next(error) }
   })
 
+/**
+ * Update
+ */
 router.put('/:id', async (request, response /*,next*/) => {
   //try {
   // Validate the ObjectId

@@ -40,9 +40,8 @@ th, td {
   text-align: left;
 }
 
-tr:hover {
-  cursor: pointer;
-  background-color: #f5f5f5;
+tr:hover, .border.row:hover {
+  background-color: #cbc9c9;
 }
 
 .selected {
@@ -60,4 +59,12 @@ tr:hover {
 
 .paragraph {
   margin-right: 10px;
+}
+
+.blue-button {
+  background-color: lightskyblue;
+  border: none;
+  padding: 5px 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }

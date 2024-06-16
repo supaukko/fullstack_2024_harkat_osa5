@@ -66,10 +66,11 @@ const App = () => {
   }
 
   /**
-   * Filter based on authors
+   * Filter based on authors. The list is sorted according to the likes/votes
    */
   const filteredBlogs = blogs?.filter(blog =>
-    blog.author?.toLocaleLowerCase().includes(filter?.toLocaleLowerCase()));
+    blog.title?.toLocaleLowerCase().includes(filter?.toLocaleLowerCase()))
+    .sort((blog1, blog2) => blog1.votes - blog2.votes)
 
   const handleLogin = async (username, password) => {
     try {
@@ -98,7 +99,7 @@ const App = () => {
    * @returns 
    */
   const parseErrorMsg = (error) => {
-    const msg = error.response.data.error;
+    const msg = error.response?.data?.error;
     return msg != null && msg.length > 0 ? msg : error.message
   }
 
@@ -135,7 +136,7 @@ const App = () => {
     console.log('handleUpdateBlog', data)
     try {
       const returnedBlog = await blogService.update(data.id, data)
-      setBlogs(blogs.map(b => (blog.id === returnedBlog.id ? {...returnedBlog} : blog)))
+      setBlogs(blogs.map(blog => (blog.id === returnedBlog.id ? {...returnedBlog} : blog)))
       showNotification(`Updated ${returnedBlog.author}`, style.notification)
     }
     catch(error) {
@@ -147,31 +148,18 @@ const App = () => {
    * Handle delete
    * @param {*} id 
    */
-  const handleBlogDelete = async (id) => {
+  const handleDeleteBlog = async (id) => {
     const blog = blogs.find(b => b.id === id)
-    if (window.confirm(`Delete ${blog.title} ?`)) {
+    console.log('handleDeleteBlog', blog)
+    if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}?`)) {
       try {
         await blogService.remove(id)
         setBlogs(blogs.filter(b => b.id !== id))
-        showNotification(`Deleted ${blog.title}`, style.notification)
+        showNotification(`The blog '${blog.title}' has been removed`, style.notification)
       }
       catch(error) {
         showNotification(parseErrorMsg(error), style.error)
       }
-    }
-  }
-
-  /**
-   * Select blog
-   * @param {*} blog 
-   */
-  const handleBlogSelect = (blog) => {
-    console.log('handleBlogSelect', blog)
-    if (selectedBlog?.id === blog.id) {
-      setSelectedBlog(null)
-    }
-    else {
-      setSelectedBlog({...blog})
     }
   }
 
@@ -197,10 +185,9 @@ const App = () => {
           <Filter filter={filter} handleChange={handleFilterChange} />
           <Blogs
             blogs={filteredBlogs}
-            selectedBlog={selectedBlog}
-            isDeleteDisabled={user == null}
-            handleBlogDelete={handleBlogDelete}
-            handleBlogSelect={handleBlogSelect} />
+            user={user}
+            handleDeleteBlog={handleDeleteBlog}
+            handleUpdateBlog={handleUpdateBlog} />
         </div>
     </div>
   )
