@@ -121,6 +121,9 @@ const App = () => {
       console.log('handleAddBlog', data)
       const returnedBlog = await blogService.create(data)
       setBlogs(blogs.concat(returnedBlog))
+      if (blogFormRef.current) {
+        blogFormRef.current.toggleVisibility()
+      }
       showNotification(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
         style.notification)
     }
