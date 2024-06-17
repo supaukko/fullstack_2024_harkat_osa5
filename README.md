@@ -122,9 +122,42 @@ npm install  bcryptjs
 npm install jsonwebtoken
 ```
 
-# Fullstackopen - osa 5
+# Fullstackopen - osa 5 - frontend
 
 [fullstackopen osa 5](https://fullstackopen.com/osa5)
 
 ## Kirjautuminen frontendissa
 
+## props.children ja proptypet
+
+useRef hookilla luodaan ref, joka kiinnitetään child-komponentin sisältävälle parent-komponentille. Nyt siis ref-muuttuja toimii viitteenä komponenttiin.
+Komponentin luova funktio on kääritty funktiokutsun forwardRef sisälle, jolloin komponentti pääsee käsiksi sille määriteltyyn refiin.
+
+Komponentti tarjoaa useImperativeHandle-hookin avulla sisäisesti määritellyn funktionsa ulkopuolelta kutsuttavaksi - xxxRef.current.yyy()
+
+
+## React-sovellusten testaaminen
+
+React-komponenttien testaamiseen voidaan käyttää Facebookin kehittämää Jest-kirjastoa. Viten kehittäjien uuden generaation Vitest-testikirjastot tarjoavat saman ohjelmointirajapinnan, joten testauskoodissa ei käytännössä ole mitään eroa.
+
+```
+npm install --save-dev vitest jsdom
+npm install --save-dev @testing-library/react @testing-library/jest-dom
+npm install --save-dev eslint-plugin-vitest-globals
+```
+
+Screen -objektin sisällön tulostus konsoliiin
+```
+screen.debug()
+
+const element = screen.getByText('Foobar')
+screen.debug(element)
+```
+
+### Nappien painelu
+
+user-event -kirjaston avulla voidaan painella nappeja
+
+```
+npm install --save-dev @testing-library/user-event
+```

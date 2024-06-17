@@ -24,11 +24,15 @@ const Blog = ({
   const isRemoveEnabled = blog?.user?.username !== user?.username
 
   return (
-    <div className={'border'}>
+    <div className={'blog'}>
       <div className={'row'}>
         <p className='paragraph'>{blog.title} -- {blog.author}</p>
         <div>
-          <button onClick={toggleVisible}>{isVisible ? 'hide' : 'view'}</button>
+          <button
+            className={'toggle-button'}
+            onClick={toggleVisible}>
+              {isVisible ? 'hide' : 'view'}
+          </button>
         </div>
       </div>
       {isVisible && (
@@ -39,7 +43,8 @@ const Blog = ({
           <div className={'row'}>
             <p className='paragraph'>likes: {blog.votes}</p>
             <div>
-              <button onClick={handleIncreaseLikes}>like</button>
+              <button
+                onClick={handleIncreaseLikes}>like</button>
             </div>
           </div>
           <div className={'row'}>

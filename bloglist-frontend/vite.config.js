@@ -12,4 +12,11 @@ export default defineConfig({
       },
     },
   },
+  test: {
+    environment: 'jsdom',
+    // globals: true ansiosta testien käyttämiä avainsanoja
+    // kuten describe, test ja expect ei ole tarvetta importata testeissä
+    globals: true,
+    setupFiles: './testSetup.js', 
+  }
 })
