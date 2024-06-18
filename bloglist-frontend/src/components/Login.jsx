@@ -23,6 +23,7 @@ function Login({ handleLogin }) {
         <div>
           <label htmlFor="username">Username</label>
           <input
+            data-testid='username'
             id="username"
             name="username"
             type="text"
@@ -33,6 +34,7 @@ function Login({ handleLogin }) {
         <div>
           <label htmlFor="password">Password</label>
           <input
+            data-testid='password'
             id="password"
             name="password"
             type="password"

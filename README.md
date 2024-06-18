@@ -168,3 +168,6 @@ user-event -kirjaston avulla voidaan painella nappeja
 ```
 npm install --save-dev @testing-library/user-event
 ```
+
+## End to end -testaus: Playwright
+

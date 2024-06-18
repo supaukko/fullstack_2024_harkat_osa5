@@ -127,6 +127,7 @@ router.put('/:id', async (request, response /*,next*/) => {
   // Cast to ObjectId failed for value (type Object) at path User because of "BSONError"
   //const blog = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true })
   const blog = await Blog.findById(request.params.id)
+  // console.log('++ Update blog', blog)
   if (!blog) {
     return response.status(404).json({ message: 'Blog not found' })
   }
@@ -136,6 +137,7 @@ router.put('/:id', async (request, response /*,next*/) => {
   blog.votes = request.body.votes
   await blog.save()
   const updatedBlog = await getBlog(request.params.id)
+  // console.log('-- Update blog', updatedBlog)
   response.status(200).json(updatedBlog)
   //} catch(error) { next(error) }
 })

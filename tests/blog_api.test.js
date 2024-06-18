@@ -172,7 +172,7 @@ describe('Tehtavat 4.13 - 4.14', () => {
       assert.strictEqual(changedResponse.body.author, blog.author)
       assert.strictEqual(changedResponse.body.url, blog.url)
       assert.strictEqual(changedResponse.body.id, blog.id)
-      assert.strictEqual(changedResponse.body.user, blog.user.id)
+      assert.strictEqual(changedResponse.body.user.id, blog.user.id)
     })
   })
 })

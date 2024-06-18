@@ -53,6 +53,7 @@ const BlogForm = ({ handleAddBlog }) => {
         <div>
           <label htmlFor="author">author:</label>
           <input
+            data-testid="author"
             type="text"
             id="author"
             name="author"
@@ -63,6 +64,7 @@ const BlogForm = ({ handleAddBlog }) => {
         <div>
           <label htmlFor="title">title:</label>
           <input
+            data-testid="title"
             type="text"
             id="title"
             name="title"
@@ -73,6 +75,7 @@ const BlogForm = ({ handleAddBlog }) => {
         <div>
           <label htmlFor="url">url:</label>
           <input
+            data-testid="url"
             type="text"
             id="url"
             name="url"
@@ -83,6 +86,7 @@ const BlogForm = ({ handleAddBlog }) => {
         <div>
           <label htmlFor="votes">likes:</label>
           <input
+            data-testid="votes"
             type="text"
             id="votes"
             name="votes"

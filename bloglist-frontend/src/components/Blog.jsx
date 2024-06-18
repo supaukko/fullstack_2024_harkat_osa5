@@ -42,7 +42,9 @@ const Blog = ({
             <p className='paragraph'>url: {blog.url}</p>
           </div>
           <div className={'row'}>
-            <p className='paragraph'>likes: {blog.votes}</p>
+            <p
+              className='paragraph'
+              data-testid='blog_votes'>likes: {blog.votes}</p>
             <div>
               <button
                 onClick={handleIncreaseLikes}>like</button>
@@ -64,9 +66,12 @@ const Blog = ({
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   handleDeleteBlog: PropTypes.func.isRequired,
   handleUpdateBlog: PropTypes.func.isRequired
 }
 
+Blog.defaultProps = {
+  user: null
+}
 export default Blog

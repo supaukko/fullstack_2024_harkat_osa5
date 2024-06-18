@@ -30,7 +30,7 @@ Blogs.propTypes = {
   handleDeleteBlog: PropTypes.func.isRequired
 }
 
-Notification.defaultProps = {
+Blogs.defaultProps = {
   user: null
 }
 
