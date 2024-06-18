@@ -11,14 +11,14 @@ const Blogs = ({
 
   return (
     <div>
-    {
-      blogs.map(blog => <Blog
+      {
+        blogs.map(blog => <Blog
           key={blog.id}
           blog={blog}
           handleUpdateBlog={handleUpdateBlog}
           user={user}
           handleDeleteBlog={handleDeleteBlog} />)
-    }
+      }
     </div>
   )
 }

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
-function Login({handleLogin}) {
+function Login({ handleLogin }) {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   /**
    * Login
-   * @param {*} event 
+   * @param {*} event
    */
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -16,34 +16,34 @@ function Login({handleLogin}) {
     setPassword('')
   }
 
-    return (
-        <div className='border'>
-            <h2>log in to application</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <input
-                        id="username"
-                        name="username"
-                        type="text"
-                        value={username}
-                        onChange={({ target }) => setUsername(target.value)}
-                />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id="password" 
-                        name="password"
-                        type="password"
-                        value={password}
-                        onChange={({ target }) => setPassword(target.value)}
-                />
-                </div>
-                <button type="submit">login</button>
-            </form>
+  return (
+    <div className='border'>
+      <h2>log in to application</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
         </div>
-    )
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+    </div>
+  )
 }
 
 Login.propTypes = {

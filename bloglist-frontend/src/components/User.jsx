@@ -1,17 +1,17 @@
-function User({user, handleLogout}) {
+function User({ user, handleLogout }) {
 
-return (
+  return (
     <div>
       { user ?
-          (
-            <div className='row'>
-              <p className='paragraph'>{user?.name} logged in</p>
-              <div>
-                <button onClick={() => handleLogout()}>Logout</button>
-              </div>
+        (
+          <div className='row'>
+            <p className='paragraph'>{user?.name} logged in</p>
+            <div>
+              <button onClick={() => handleLogout()}>Logout</button>
             </div>
-          ) :
-          (<p>Not logged in</p>)
+          </div>
+        ) :
+        (<p>Not logged in</p>)
       }
     </div>
   )

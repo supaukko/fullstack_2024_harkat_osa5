@@ -7,7 +7,7 @@ describe('<BlogForm />', () => {
   let handleAddBlog
 
   beforeEach(() => {
-    handleAddBlog = vi.fn();
+    handleAddBlog = vi.fn()
     container = render(
       <BlogForm handleAddBlog={handleAddBlog} />).container
   })
@@ -28,18 +28,18 @@ describe('<BlogForm />', () => {
       const urlInput = container.querySelector('#url')
       const votesInput = container.querySelector('#votes')
       const createBtn = screen.getByText('create')
-    
+
       // Act
       await user.type(authorInput, blogObj.author)
       await user.type(titleInput, blogObj.title)
       await user.type(urlInput, blogObj.url)
-      await userEvent.clear(votesInput);
+      await userEvent.clear(votesInput)
       await user.type(votesInput, blogObj.votes)
       await user.click(createBtn)
 
       // Assert
       expect(handleAddBlog.mock.calls).toHaveLength(1)
       expect(handleAddBlog.mock.calls[0][0]).toEqual(blogObj)
-  })
+    })
 
 })

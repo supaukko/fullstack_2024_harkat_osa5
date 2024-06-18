@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types'
-function Filter({filter, handleChange}) {
+function Filter({ filter, handleChange }) {
   return (
     <div>
       <label htmlFor="filter">Suodata</label>

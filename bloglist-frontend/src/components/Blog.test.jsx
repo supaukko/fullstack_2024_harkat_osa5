@@ -23,7 +23,7 @@ describe('<Blog />', () => {
   })
 
   test('renders content - text selector', () => {
-   const element = screen.getByText(/Lorem ipsum dolor sit amet/i)
+    const element = screen.getByText(/Lorem ipsum dolor sit amet/i)
     expect(element).toBeDefined()
   })
 

@@ -10,8 +10,8 @@ describe('<Blogs />', () => {
   let userObj
 
   beforeEach(() => {
-    handleUpdateBlog = vi.fn();
-    handleDeleteBlog = vi.fn();
+    handleUpdateBlog = vi.fn()
+    handleDeleteBlog = vi.fn()
     userObj = {
       username: 'username',
       name: 'User Name'
@@ -21,7 +21,7 @@ describe('<Blogs />', () => {
       author: 'Joe Doe',
       url: 'https://foo.fi',
       votes: 2000,
-      user: {...userObj}
+      user: { ...userObj }
     }]
 
     container = render(
@@ -54,14 +54,14 @@ describe('<Blogs />', () => {
   test('5.15. Event handler is called twice when the like button is pressed twice',
     async () => {
 
-    const user = userEvent.setup()
-    const viewButton = screen.getByText('view')
+      const user = userEvent.setup()
+      const viewButton = screen.getByText('view')
 
-    await user.click(viewButton)
-    const likeButton = screen.getByText('like')
-    await user.click(likeButton)
-    await user.click(likeButton)
+      await user.click(viewButton)
+      const likeButton = screen.getByText('like')
+      await user.click(likeButton)
+      await user.click(likeButton)
 
-    expect(handleUpdateBlog.mock.calls).toHaveLength(2)
-  })
+      expect(handleUpdateBlog.mock.calls).toHaveLength(2)
+    })
 })

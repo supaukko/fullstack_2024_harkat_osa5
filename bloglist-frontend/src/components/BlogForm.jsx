@@ -11,39 +11,39 @@ const defaultBlogData = {
   id: null
 }
 
-const BlogForm = ({handleAddBlog}) => {
+const BlogForm = ({ handleAddBlog }) => {
 
-  const [blogData, setBlogData] = useState({...defaultBlogData});
+  const [blogData, setBlogData] = useState({ ...defaultBlogData })
 
   const header = 'Add a new blog'
   /**
-   * Handle change 
-   * @param {*} event 
+   * Handle change
+   * @param {*} event
    */
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     setBlogData({
       ...blogData,
       [name]: value
-    });
+    })
   }
 
   /**
-   * Clear blog data 
+   * Clear blog data
    */
   const handleClear = (event) => {
     event.preventDefault()
-    setBlogData({...defaultBlogData});
+    setBlogData({ ...defaultBlogData })
   }
 
   /**
    * Handle the addition of a new blog or the update of an old blog
-   * @param {*} event 
+   * @param {*} event
    */
   const handleSubmit = async (event) => {
     event.preventDefault()
     await handleAddBlog(blogData)
-    setBlogData({...defaultBlogData});
+    setBlogData({ ...defaultBlogData })
   }
 
   return (
