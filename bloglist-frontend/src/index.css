@@ -78,3 +78,10 @@ tr:hover, .border.row:hover {
   cursor: pointer;
   border-radius: 5px;
 }
+
+.list-no-style {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+

@@ -10,7 +10,7 @@ const Blogs = ({
   handleDeleteBlog }) => {
 
   return (
-    <div>
+    <ul className={'list-no-style'}>
       {
         blogs.map(blog => <Blog
           key={blog.id}
@@ -19,7 +19,7 @@ const Blogs = ({
           user={user}
           handleDeleteBlog={handleDeleteBlog} />)
       }
-    </div>
+    </ul>
   )
 }
 

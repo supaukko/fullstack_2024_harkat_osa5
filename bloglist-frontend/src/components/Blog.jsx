@@ -25,7 +25,7 @@ const Blog = ({
   const isRemoveEnabled = blog?.user?.username !== user?.username
 
   return (
-    <div className={'blog'}>
+    <li className={'blog'}>
       <div className={'row'}>
         <p className='paragraph'>{blog.title} -- {blog.author}</p>
         <div>
@@ -60,18 +60,20 @@ const Blog = ({
           )}
         </>
       )}
-    </div>
+    </li>
   )
 }
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   user: PropTypes.object,
-  handleDeleteBlog: PropTypes.func.isRequired,
-  handleUpdateBlog: PropTypes.func.isRequired
+  handleDeleteBlog: PropTypes.func,
+  handleUpdateBlog: PropTypes.func
 }
 
 Blog.defaultProps = {
-  user: null
+  user: null,
+  handleDeleteBlog: undefined,
+  handleUpdateBlog: undefined
 }
 export default Blog

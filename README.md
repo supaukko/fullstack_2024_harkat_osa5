@@ -171,3 +171,21 @@ npm install --save-dev @testing-library/user-event
 
 ## End to end -testaus: Playwright
 
+### Testien kehittäminen ja debuggaaminen
+
+Debug test case:
+
+```
+npm test -- -g'likes can be increased' --debug
+
+await page.pause()
+```
+
+UI mode: `npm run test -- --ui`
+
+Trace:
+
+```
+npm run test -- --trace on
+npx playwright show-report
+```

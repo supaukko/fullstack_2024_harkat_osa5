@@ -66,11 +66,12 @@ const App = () => {
   }
 
   /**
-   * Filter based on authors. The list is sorted according to the likes/votes
+   * Filter based on authors. The list is descending sorted
+   * according to the likes/votes
    */
   const filteredBlogs = blogs?.filter(blog =>
     blog.title?.toLocaleLowerCase().includes(filter?.toLocaleLowerCase()))
-    .sort((blog1, blog2) => blog1.votes - blog2.votes)
+    .sort((blog1, blog2) => blog2.votes - blog1.votes)
 
   const handleLogin = async (username, password) => {
     try {
