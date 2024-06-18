@@ -8,7 +8,7 @@ import Notification from './components/Notification'
 import Login from './components/Login'
 import User from './components/User'
 import Togglable from './components/Togglable'
-import {USER_STORAGE_KEY} from './config/constants'
+import { USER_STORAGE_KEY } from './config/constants'
 
 
 
@@ -57,9 +57,9 @@ const App = () => {
     }
   }, [])
 
-    /**
+  /**
    * Filter
-   * @param {*} event 
+   * @param {*} event
    */
   const handleFilterChange = (event) => {
     setFilter(event.target.value)
@@ -74,10 +74,10 @@ const App = () => {
 
   const handleLogin = async (username, password) => {
     try {
-      const usr = await loginService.login({username, password})
+      const usr = await loginService.login({ username, password })
       window.localStorage.setItem(
         USER_STORAGE_KEY, JSON.stringify(usr)
-      ) 
+      )
       blogService.setToken(usr.token)
       setUser(usr)
     } catch (exception) {
@@ -95,12 +95,13 @@ const App = () => {
 
   /**
    * Parse error msg
-   * @param {*} error 
-   * @returns 
+   * @param {*} error
+   * @returns
    */
   const parseErrorMsg = (error) => {
-    const msg = error.response?.data?.error;
-    return msg != null && msg.length > 0 ? msg : error.message
+    const msg = error.response?.data?.error
+    return msg !== null && msg !== undefined
+      && msg.length > 0 ? msg : error.message
   }
 
   const showNotification = (msg, style) => {
@@ -139,7 +140,7 @@ const App = () => {
     console.log('handleUpdateBlog', data)
     try {
       const returnedBlog = await blogService.update(data.id, data)
-      setBlogs(blogs.map(blog => (blog.id === returnedBlog.id ? {...returnedBlog} : blog)))
+      setBlogs(blogs.map(blog => (blog.id === returnedBlog.id ? { ...returnedBlog } : blog)))
       showNotification(`Updated ${returnedBlog.author}`, style.notification)
     }
     catch(error) {
@@ -149,7 +150,7 @@ const App = () => {
 
   /**
    * Handle delete
-   * @param {*} id 
+   * @param {*} id
    */
   const handleDeleteBlog = async (id) => {
     const blog = blogs.find(b => b.id === id)
@@ -175,23 +176,23 @@ const App = () => {
       <Notification message={notificationMessage} style={notificationStyle} />
       <h2>blogs</h2>
       <User user={user} handleLogout={handleLogout} />
-        { !user &&
+      { !user &&
           <Login handleLogin={handleLogin} />
-        }
-        <div>
-          { user && 
+      }
+      <div>
+        { user &&
             <Togglable buttonLabel='new blog' ref={blogFormRef}>
               <BlogForm handleAddBlog={handleAddBlog} />
             </Togglable>
-          }
-          <h2>Blogit</h2>
-          <Filter filter={filter} handleChange={handleFilterChange} />
-          <Blogs
-            blogs={filteredBlogs}
-            user={user}
-            handleDeleteBlog={handleDeleteBlog}
-            handleUpdateBlog={handleUpdateBlog} />
-        </div>
+        }
+        <h2>Blogit</h2>
+        <Filter filter={filter} handleChange={handleFilterChange} />
+        <Blogs
+          blogs={filteredBlogs}
+          user={user}
+          handleDeleteBlog={handleDeleteBlog}
+          handleUpdateBlog={handleUpdateBlog} />
+      </div>
     </div>
   )
 }
