@@ -1,5 +1,6 @@
-function Filter({filter, handleChange}) {
 
+import PropTypes from 'prop-types'
+function Filter({filter, handleChange}) {
   return (
     <div>
       <label htmlFor="filter">Suodata</label>
@@ -13,6 +14,11 @@ function Filter({filter, handleChange}) {
       />
     </div>
   )
+}
+
+Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired
 }
 
 export default Filter

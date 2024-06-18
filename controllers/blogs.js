@@ -19,7 +19,7 @@ const getTokenFrom = request => {
  * @param {*} id
  * @returns
  */
-const doGet = async (id) => {
+const getBlog = async (id) => {
   const blog =  await Blog.findById(id)
     .populate('user', { username: 1, name: 1 })
   return blog
@@ -38,7 +38,7 @@ router.get('/', async (request, response) => {
  */
 router.get('/:id', async (request, response /*,next*/) => {
   //try {
-  const blog =  await doGet(request.params.id)
+  const blog =  await getBlog(request.params.id)
   if (blog) {
     response.json(blog)
   } else {
@@ -80,7 +80,8 @@ router.post(
     }
     console.log(`router.post - new blog id=${savedBlog._id}, user's block count=${user?.blogs?.length} kpl`)
 
-    response.status(201).json(savedBlog)
+    const result = await getBlog(savedBlog._id)
+    response.status(201).json(result)
   //} catch(error) { next(error) }
   })
 
@@ -134,7 +135,7 @@ router.put('/:id', async (request, response /*,next*/) => {
   blog.url = request.body.url
   blog.votes = request.body.votes
   await blog.save()
-  const updatedBlog = await doGet(request.params.id)
+  const updatedBlog = await getBlog(request.params.id)
   response.status(200).json(updatedBlog)
   //} catch(error) { next(error) }
 })

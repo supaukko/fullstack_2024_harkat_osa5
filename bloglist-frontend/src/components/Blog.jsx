@@ -1,19 +1,20 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({
   blog,
   user,
   handleDeleteBlog,
-  handleUpdateBlog}) => {
+  handleUpdateBlog }) => {
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
 
   //console.log(`Blog user=${user?.username}`, blog)
 
   const handleIncreaseLikes = () => {
-    const updatedBlog = {...blog, ['votes']: blog.votes + 1}
+    const updatedBlog = { ...blog, ['votes']: blog.votes + 1 }
     console.log('handleIncreaseLikes', updatedBlog)
-    handleUpdateBlog(updatedBlog);
+    handleUpdateBlog(updatedBlog)
   }
 
   const toggleVisible = (event) => {
@@ -31,7 +32,7 @@ const Blog = ({
           <button
             className={'toggle-button'}
             onClick={toggleVisible}>
-              {isVisible ? 'hide' : 'view'}
+            {isVisible ? 'hide' : 'view'}
           </button>
         </div>
       </div>
@@ -59,6 +60,13 @@ const Blog = ({
       )}
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  handleDeleteBlog: PropTypes.func.isRequired,
+  handleUpdateBlog: PropTypes.func.isRequired
 }
 
 export default Blog

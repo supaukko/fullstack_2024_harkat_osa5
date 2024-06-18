@@ -1,4 +1,5 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * Komponentin luova funktio on kääritty funktiokutsun forwardRef sisälle,
@@ -31,7 +32,7 @@ const Togglable = forwardRef((props, ref) => {
       </div>
       <div style={showWhenVisible} className="togglableContent">
         <div className='border' >
-        {props.children}
+          {props.children}
         </div>
         <button onClick={toggleVisibility}>cancel</button>
       </div>
@@ -39,5 +40,11 @@ const Togglable = forwardRef((props, ref) => {
   )
 
 })
+
+Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired
+}
+
+Togglable.displayName = 'Togglable'
 
 export default Togglable

@@ -135,6 +135,13 @@ Komponentin luova funktio on kääritty funktiokutsun forwardRef sisälle, jollo
 
 Komponentti tarjoaa useImperativeHandle-hookin avulla sisäisesti määritellyn funktionsa ulkopuolelta kutsuttavaksi - xxxRef.current.yyy()
 
+### Proptypet
+
+Komponentin olettamat ja edellyttämät propsit ja niiden tyypit voidaan määritellä kirjaston prop-types
+
+```
+npm install prop-types
+```
 
 ## React-sovellusten testaaminen
 
